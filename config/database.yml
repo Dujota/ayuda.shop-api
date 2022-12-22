@@ -23,6 +23,8 @@ default: &default
 
 development:
   <<: *default
+  username: <%= ENV['POSTGRESQL_USER'] %> # or your username
+  password: <%= ENV['POSTGRESQL_PASSWORD'] %> # or your password
   database: ayuda_api_development
 
   # The specified database role being used to connect to postgres.
