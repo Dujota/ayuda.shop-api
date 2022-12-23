@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # TODO REMOVE or Replace with get token?
   get "/current-user", to: "current_user#index"
 
-  namespace :api do
+  namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :listings
     end
