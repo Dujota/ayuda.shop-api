@@ -69,6 +69,43 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: services; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.services (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    provider character varying,
+    uid character varying,
+    access_token character varying,
+    access_token_secret character varying,
+    refresh_token character varying,
+    expires_at timestamp(6) without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: services_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.services_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: services_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.services_id_seq OWNED BY public.services.id;
+
+
+--
 -- Name: types; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -145,6 +182,13 @@ ALTER TABLE ONLY public.listings ALTER COLUMN id SET DEFAULT nextval('public.lis
 
 
 --
+-- Name: services id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.services ALTER COLUMN id SET DEFAULT nextval('public.services_id_seq'::regclass);
+
+
+--
 -- Name: types id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -180,6 +224,14 @@ ALTER TABLE ONLY public.listings
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: services services_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.services
+    ADD CONSTRAINT services_pkey PRIMARY KEY (id);
 
 
 --
@@ -220,6 +272,13 @@ CREATE INDEX index_listings_on_user_id ON public.listings USING btree (user_id);
 
 
 --
+-- Name: index_services_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_services_on_user_id ON public.services USING btree (user_id);
+
+
+--
 -- Name: index_types_on_type; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -238,6 +297,14 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_users_on_jti ON public.users USING btree (jti);
+
+
+--
+-- Name: services fk_rails_51a813203f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.services
+    ADD CONSTRAINT fk_rails_51a813203f FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -266,6 +333,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221222151657'),
 ('20221222152343'),
 ('20221223022838'),
-('20221223034622');
+('20221223034622'),
+('20221226205817');
 
 
