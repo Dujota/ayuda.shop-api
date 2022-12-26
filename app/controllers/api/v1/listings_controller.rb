@@ -1,4 +1,4 @@
-class Api::V1::ListingsController < ApplicationController
+class API::V1::ListingsController < ApplicationController
   before_action :set_listing, only: %i[show update destroy]
 
   # GET /api/v1/listings
