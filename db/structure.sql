@@ -112,7 +112,7 @@ ALTER SEQUENCE public.services_id_seq OWNED BY public.services.id;
 
 CREATE TABLE public.types (
     id bigint NOT NULL,
-    type character varying NOT NULL,
+    tag character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -284,10 +284,10 @@ CREATE INDEX index_services_on_user_id ON public.services USING btree (user_id);
 
 
 --
--- Name: index_types_on_type; Type: INDEX; Schema: public; Owner: -
+-- Name: index_types_on_tag; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_types_on_type ON public.types USING btree (type);
+CREATE UNIQUE INDEX index_types_on_tag ON public.types USING btree (tag);
 
 
 --

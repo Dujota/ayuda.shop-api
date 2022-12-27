@@ -1,4 +1,4 @@
 class Type < ApplicationRecord
-  validates :type, presence: true
-  validates :type, inclusion: %w[offer seek]
+  validates :tag, presence: true
+  validates :tag, inclusion: %w[offer seek]
 end
