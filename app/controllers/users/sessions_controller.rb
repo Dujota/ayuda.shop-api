@@ -24,37 +24,44 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
-   respond_to :json
+  respond_to :json
+  # def create
+  #   self.resource =
+  #     warden.authenticate!(auth_options.merge(store: !request.format.json?))
+  #   super
+  # end
+
   private
 
   def respond_with(resource, _opts = {})
     render json: {
-            status: { code: 200, message: "Logged in sucessfully." },
-            # data: UserSerializer.new(resource).serializable_hash[:data][:attributes],
-            data: resource
-          }, status: :ok
+             status: {
+               code: 200,
+               message: "Logged in sucessfully."
+             },
+             # data: UserSerializer.new(resource).serializable_hash[:data][:attributes],
+             data: resource
+           },
+           status: :ok
   end
 
   def logout_success
     render json: {
-         status: 200,
-         message: "logged out successfully",
-       }, status: :ok
+             status: 200,
+             message: "logged out successfully"
+           },
+           status: :ok
   end
 
-
   def logout_failed
-      render json: {
-              status: 401,
-              message: "Couldn't find an active session.",
-            }, status: :unauthorized
+    render json: {
+             status: 401,
+             message: "Couldn't find an active session."
+           },
+           status: :unauthorized
   end
 
   def respond_to_on_destroy
-    if current_user
-      logout_success
-    else
-      logout_failed
-    end
+    current_user ? logout_success : logout_failed
   end
 end

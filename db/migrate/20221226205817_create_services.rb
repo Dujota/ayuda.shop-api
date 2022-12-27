@@ -5,8 +5,9 @@ class CreateServices < ActiveRecord::Migration[7.0]
       t.string :provider
       t.string :uid
       t.string :access_token
-      t.string :access_token_secret
       t.string :refresh_token
+      t.string :image
+      t.boolean :email_verified
       t.datetime :expires_at
 
       t.timestamps

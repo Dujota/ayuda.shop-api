@@ -78,8 +78,9 @@ CREATE TABLE public.services (
     provider character varying,
     uid character varying,
     access_token character varying,
-    access_token_secret character varying,
     refresh_token character varying,
+    image character varying,
+    email_verified boolean,
     expires_at timestamp(6) without time zone,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -151,7 +152,11 @@ CREATE TABLE public.users (
     last_sign_in_ip character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    jti character varying NOT NULL
+    jti character varying NOT NULL,
+    name character varying,
+    family_name character varying,
+    given_name character varying,
+    locale character varying
 );
 
 
@@ -334,6 +339,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221222152343'),
 ('20221223022838'),
 ('20221223034622'),
-('20221226205817');
+('20221226205817'),
+('20221227003654');
 
 
