@@ -18,7 +18,9 @@ class API::V1::ListingsController < ApplicationController
     @listing = Listing.new(listing_params)
 
     if @listing.save
-      render json: @listing, status: :created, location: @listing
+      render json: @listing,
+             status: :created,
+             location: api_v1_listings_url(@listing)
     else
       render json: @listing.errors, status: :unprocessable_entity
     end
@@ -47,6 +49,6 @@ class API::V1::ListingsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def listing_params
-    params.require(:listing).permit(:title, :description, :type, :user)
+    params.require(:listing).permit(:title, :description, :type_id, :user_id)
   end
 end
