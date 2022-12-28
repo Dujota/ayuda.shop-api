@@ -20,22 +20,26 @@ class Users::NextOAuthController < ApplicationController
   private
 
   def handle_auth(kind)
-    if service.present? #if the service exists
-      service.update(service_attributes) # update the credentials to the newest ones on every log in
+    if @user
+      if service.present? #if the service exists
+        service.update(service_attributes) # update the credentials to the newest ones on every log in
+      else
+        # create the service associated with the user from the oauth hash, we pull the data from the oauth response hash that we printed to the console
+        user.services.create(service_attributes)
+      end
+      service_processed_success(kind)
     else
-      # create the service associated with the user from the oauth hash, we pull the data from the oauth response hash that we printed to the console
-      user.services.create(service_attributes)
+      verify_user_failed
     end
+  end
 
-    # TODO: setup the custom reg logic
-    if user_signed_in?
-      #   flash[:notice] = "Your #{kind} is now Connected"
-      #   redirect_to edit_user_registration_path
-    else
-      # sign_in_and_redirect user, event: :authentication
-      # set_flash_message :notice, :success, kind: kind
-      # sign_in @user, store: false
-    end
+  def service_processed_success(kind)
+    render json: {
+             status: 200,
+             message: "#{kind.capitalize} service processed",
+             data: true
+           },
+           status: :ok
   end
 
   def verify_user_success
