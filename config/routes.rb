@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   scope "/api/v1", defaults: { format: :json } do
     scope "/nextauth" do
       post "/oauth", to: "users/next_oauth#oauth"
+      post "/token", to: "users/next_oauth#verify_user"
       # post "/google", to: "users/next_oauth#google"
       # post "/discord", to: "uses/next_oauth#discord"
       # post "/facebook", to: "users/next_oauth#facebook"

@@ -8,6 +8,15 @@ class Users::NextOAuthController < ApplicationController
     handle_auth params[:auth][:provider]
   end
 
+  def verify_user
+    if @user.present?
+      sign_in @user, store: false
+      verify_user_success
+    else
+      verify_user_failed
+    end
+  end
+
   private
 
   def handle_auth(kind)
@@ -25,8 +34,20 @@ class Users::NextOAuthController < ApplicationController
     else
       # sign_in_and_redirect user, event: :authentication
       # set_flash_message :notice, :success, kind: kind
-      sign_in @user, store: false
+      # sign_in @user, store: false
     end
+  end
+
+  def verify_user_success
+    render json: {
+             status: 200,
+             message: "verified user successfully"
+           },
+           status: :ok
+  end
+
+  def verify_user_failed
+    render json: { status: 400 }, status: :bad_request
   end
 
   def set_service
