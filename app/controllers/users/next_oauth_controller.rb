@@ -20,7 +20,7 @@ class Users::NextOAuthController < ApplicationController
   private
 
   def handle_auth(kind)
-    if @user
+    begin
       if service.present? #if the service exists
         service.update(service_attributes) # update the credentials to the newest ones on every log in
       else
@@ -28,7 +28,7 @@ class Users::NextOAuthController < ApplicationController
         user.services.create(service_attributes)
       end
       service_processed_success(kind)
-    else
+    rescue StandardError
       verify_user_failed
     end
   end
@@ -72,6 +72,7 @@ class Users::NextOAuthController < ApplicationController
       # 5. user is logged out and they log in to a new account that doesnt match their old one, we throw exception to let them know
 
       # TODO: custom logic needed for returning or dupe users from oauth
+      # debugger
     else
       # if doesnt exist, create the user,
       @user = create_user
