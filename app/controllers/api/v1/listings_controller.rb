@@ -1,5 +1,6 @@
 class API::V1::ListingsController < ApplicationController
   before_action :set_listing, only: %i[show update destroy]
+  before_action :authenticate_user!, except: %i[index]
 
   # GET /api/v1/listings
   def index
