@@ -21,7 +21,8 @@ class API::V1::TypesController < ApplicationController
     if @api_v1_type.save
       render json: @api_v1_type, status: :created, location: @api_v1_type
     else
-      render json: @api_v1_type.errors, status: :unprocessable_entity
+      render json: @api_v1_type.errors.error_messages,
+             status: :unprocessable_entity
     end
   end
 
@@ -30,7 +31,8 @@ class API::V1::TypesController < ApplicationController
     if @api_v1_type.update(api_v1_type_params)
       render json: @api_v1_type
     else
-      render json: @api_v1_type.errors, status: :unprocessable_entity
+      render json: @api_v1_type.errors.error_messages,
+             status: :unprocessable_entity
     end
   end
 
