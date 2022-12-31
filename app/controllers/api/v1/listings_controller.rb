@@ -17,6 +17,7 @@ class API::V1::ListingsController < ApplicationController
   # POST /api/v1/listings
   def create
     @listing = Listing.new(listing_params)
+    @listing.user = current_user
 
     if @listing.save
       render json: @listing,
