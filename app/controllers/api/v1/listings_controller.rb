@@ -1,6 +1,6 @@
 class API::V1::ListingsController < ApplicationController
-  before_action :set_listing, only: %i[show update destroy]
   before_action :authenticate_user!, except: %i[index]
+  load_and_authorize_resource
 
   # GET /api/v1/listings
   def index
@@ -43,10 +43,10 @@ class API::V1::ListingsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_listing
-    @listing = Listing.find(params[:id])
-  end
+  # # Use callbacks to share common setup or constraints between actions.
+  # def set_listing
+  #   @listing = Listing.find(params[:id])
+  # end
 
   # Only allow a list of trusted parameters through.
   def listing_params

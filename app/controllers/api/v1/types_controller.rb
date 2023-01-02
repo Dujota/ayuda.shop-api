@@ -1,6 +1,6 @@
 class API::V1::TypesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_api_v1_type, only: %i[show]
+  load_and_authorize_resource
 
   # GET /api/v1/types
   def index

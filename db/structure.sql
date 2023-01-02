@@ -156,7 +156,8 @@ CREATE TABLE public.users (
     name character varying,
     family_name character varying,
     given_name character varying,
-    locale character varying
+    locale character varying,
+    roles_mask integer
 );
 
 
@@ -340,6 +341,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221223022838'),
 ('20221223034622'),
 ('20221226205817'),
-('20221227003654');
+('20221227003654'),
+('20230102171824');
 
 

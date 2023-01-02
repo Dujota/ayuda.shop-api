@@ -15,6 +15,8 @@ gem "puma", "~> 5.0"
 # Auth
 gem "devise"
 gem "devise-jwt"
+gem "cancancan"
+gem "role_model"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
