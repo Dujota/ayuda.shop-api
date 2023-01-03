@@ -39,6 +39,7 @@ class Ability
       if !user.new_record?
         can :show, User, user_id: user.id
         can :read, Listing
+        can :read, Type
         can %i[create destroy update], Listing, user_id: user.id
       end
 
