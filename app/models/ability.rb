@@ -37,8 +37,12 @@ class Ability
 
       # Signed in user Permissions
       if !user.new_record?
+        # Aliases
+        alias_action :my_listings, to: :manage_my_listings
+
         can :show, User, user_id: user.id
         can :read, Listing
+        can :manage_my_listings, Listing
         can :read, Type
         can %i[create destroy update], Listing, user_id: user.id
       end

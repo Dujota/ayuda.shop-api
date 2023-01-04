@@ -3,7 +3,13 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :listings
+      resources :listings do
+        collection do
+          get "my-listings"
+          # post "my_listings" TODO: maybe look into post insted of get with params?
+        end
+      end
+
       resources :types, only: %i[index show]
     end
   end
