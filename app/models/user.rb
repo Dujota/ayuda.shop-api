@@ -18,4 +18,20 @@ class User < ApplicationRecord
   include RoleModel
   roles_attribute :roles_mask
   roles :admin, :content_editor, :guest
+
+  # GENERATE REFRESH TOKEN
+  def create_new_jwt_token
+    update(jti: SecureRandom.uuid)
+    JWT.encode(
+      { sub: id, exp: expiration_time, iat: Time.now.to_i, jti: jti },
+      Devise.secret_key
+    )
+  end
+
+  private
+
+  def expiration_time
+    # can set here a time in the future depending on needs
+    Time.now.to_i + 30.minutes
+  end
 end

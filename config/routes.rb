@@ -3,6 +3,10 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      # Refresh Token
+      post "token/refresh", to: "token#refresh"
+
+      # Listings
       resources :listings do
         collection do
           get "my-listings"
