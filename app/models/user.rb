@@ -21,9 +21,6 @@ class User < ApplicationRecord
 
   # GENERATE REFRESH TOKEN
   def create_new_jwt_token(scope = "user")
-    puts "devise key:  #{Devise.secret_key}"
-    puts "env key:  #{ENV["DEVISE_JWT_SECRET_KEY"]}"
-
     # First revoke the existing token, by changing the jti value
     update(jti: SecureRandom.uuid)
 
@@ -43,6 +40,6 @@ class User < ApplicationRecord
 
   def expiration_time
     # can set here a time in the future depending on needs
-    Time.now.to_i + 30.minutes
+    Time.now.to_i + 60.minutes
   end
 end
