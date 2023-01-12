@@ -20,12 +20,23 @@ class User < ApplicationRecord
   roles :admin, :content_editor, :guest
 
   # GENERATE REFRESH TOKEN
-  def create_new_jwt_token
+  def create_new_jwt_token(scope = "user")
+    puts "devise key:  #{Devise.secret_key}"
+    puts "env key:  #{ENV["DEVISE_JWT_SECRET_KEY"]}"
+
+    # First revoke the existing token, by changing the jti value
     update(jti: SecureRandom.uuid)
-    JWT.encode(
-      { sub: id, exp: expiration_time, iat: Time.now.to_i, jti: jti },
-      Devise.secret_key
-    )
+
+    payload = {
+      sub: id,
+      exp: expiration_time,
+      iat: Time.now.to_i,
+      jti: jti,
+      aud: nil,
+      scp: scope || "user"
+    }
+
+    JWT.encode(payload, ENV["DEVISE_JWT_SECRET_KEY"], "HS256")
   end
 
   private
