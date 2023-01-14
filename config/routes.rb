@@ -1,6 +1,8 @@
 # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
 Rails.application.routes.draw do
+  mount ActionCable.server => "/cable"
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       # Refresh Token
