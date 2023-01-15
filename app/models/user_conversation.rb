@@ -4,4 +4,5 @@ class UserConversation < ApplicationRecord
 
   validates :user, presence: true
   validates :conversation, presence: true
+  validates_uniqueness_of :user_id, scope: :conversation_id
 end

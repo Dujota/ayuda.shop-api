@@ -7,7 +7,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       # Refresh Token
       post "token/refresh", to: "token#refresh"
-      post "conversations", to: "conversations#create"
+
+      resources :conversations, only: %i[create] do
+        collection { post "messages", to: "messages#create" }
+      end
+
       # Listings
       resources :listings do
         collection do

@@ -1,5 +1,5 @@
 class API::V1::ConversationsController < ApplicationController
-  before_action :authenticate_user!, only: %i[create]
+  before_action :authenticate_user!
   before_action :reject_message_to_self
 
   def create

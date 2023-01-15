@@ -4,7 +4,8 @@ class ConversationsChannel < ApplicationCable::Channel
     # stream_from "conversations_channel"
 
     # creating a private channel for each user
-    stream_from "current_user_#{current_user.id}"
+    # stream_from "current_user_#{current_user.id}"
+    stream_from "conversation_#{params[:conversation_id]}"
   end
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
