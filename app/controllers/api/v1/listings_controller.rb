@@ -80,9 +80,8 @@ class API::V1::ListingsController < ApplicationController
 
   def all_user_listings_failed
     render json: {
-             status: {
-               message: "User listings couldn't be found successfully."
-             }
+             status: 422,
+             message: "User listings couldn't be found successfully."
            },
            status: :unprocessable_entity
   end

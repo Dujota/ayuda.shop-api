@@ -32,6 +32,8 @@ CREATE TABLE public.ar_internal_metadata (
 CREATE TABLE public.conversations (
     id bigint NOT NULL,
     listing_id bigint NOT NULL,
+    recipient_id bigint NOT NULL,
+    sender_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -405,6 +407,20 @@ CREATE INDEX index_conversations_on_listing_id ON public.conversations USING btr
 
 
 --
+-- Name: index_conversations_on_recipient_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_conversations_on_recipient_id ON public.conversations USING btree (recipient_id);
+
+
+--
+-- Name: index_conversations_on_sender_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_conversations_on_sender_id ON public.conversations USING btree (sender_id);
+
+
+--
 -- Name: index_listings_on_title; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -490,6 +506,14 @@ ALTER TABLE ONLY public.messages
 
 
 --
+-- Name: conversations fk_rails_2855ab3029; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversations
+    ADD CONSTRAINT fk_rails_2855ab3029 FOREIGN KEY (sender_id) REFERENCES public.users(id);
+
+
+--
 -- Name: services fk_rails_51a813203f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -535,6 +559,14 @@ ALTER TABLE ONLY public.user_conversations
 
 ALTER TABLE ONLY public.listings
     ADD CONSTRAINT fk_rails_ee3315a7fb FOREIGN KEY (type_id) REFERENCES public.types(id);
+
+
+--
+-- Name: conversations fk_rails_f0edaae389; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversations
+    ADD CONSTRAINT fk_rails_f0edaae389 FOREIGN KEY (recipient_id) REFERENCES public.users(id);
 
 
 --

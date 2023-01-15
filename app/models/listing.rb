@@ -6,7 +6,7 @@ class Listing < ApplicationRecord
   has_many :conversations, dependent: :destroy
   # Messages are not destroyed when a listing is destroyed
   has_many :messages, through: :conversations
-  has_man :user_conversations, through: :conversations
+  has_many :user_conversations, through: :conversations
 
   validates :user, presence: true
   validates :title, :description, presence: true
