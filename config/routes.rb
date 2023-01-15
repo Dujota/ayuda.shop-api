@@ -1,10 +1,16 @@
 # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
 Rails.application.routes.draw do
+  mount ActionCable.server => "/cable"
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       # Refresh Token
       post "token/refresh", to: "token#refresh"
+
+      resources :conversations, only: %i[create] do
+        collection { post "messages", to: "messages#create" }
+      end
 
       # Listings
       resources :listings do
