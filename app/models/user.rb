@@ -1,4 +1,12 @@
 class User < ApplicationRecord
+  has_many :services, dependent: :destroy
+  has_many :listings, dependent: :destroy
+
+  # Conversations
+  has_many :user_conversations, dependent: :destroy
+  has_many :conversations, through: :user_conversations
+  has_many :messages, dependent: :destroy
+
   include Devise::JWT::RevocationStrategies::JTIMatcher
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable,  and :omniauthable
@@ -8,9 +16,6 @@ class User < ApplicationRecord
          :trackable,
          :jwt_authenticatable,
          jwt_revocation_strategy: self
-
-  has_many :services, dependent: :destroy
-  has_many :listings, dependent: :destroy
 
   # Authorization
   # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/role_based_authorization.md#many-roles-per-user
