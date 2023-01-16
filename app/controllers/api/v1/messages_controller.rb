@@ -1,8 +1,13 @@
 class API::V1::MessagesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_conversation, onlu: %i[index create]
+
+  def index
+    @messages = @conversation.messages
+    render json: { messages: @messages }
+  end
 
   def create
-    @conversation = Conversation.find(params[:conversation_id])
     @message = @conversation.messages.new(message_params)
     @message.user = current_user
 
@@ -21,6 +26,10 @@ class API::V1::MessagesController < ApplicationController
   end
 
   private
+
+  def set_conversation
+    @conversation = Conversation.find(params[:conversation_id])
+  end
 
   def message_params
     params.require(:message).permit(:content, :conversation_id)
