@@ -1,6 +1,24 @@
 class API::V1::ConversationsController < ApplicationController
   before_action :authenticate_user!
   before_action :reject_message_to_self
+  before_action :set_conversation, only: %i[show]
+
+  def index
+    @conversations = current_user.conversations
+    render json: { conversations: @conversations }
+  end
+
+  def show
+    if @conversation
+      render json: { conversation: @conversation }
+    else
+      render json: {
+               status: 422,
+               message: "Conversation not found."
+             },
+             status: :unprocessable_entity
+    end
+  end
 
   def create
     if Conversation.between(current_user.id, params[:recipient_id]).present?
@@ -41,6 +59,8 @@ class API::V1::ConversationsController < ApplicationController
         conversation.user_conversations << receiver_user_conversation
         conversation.user_conversations << sender_user_conversation
 
+        # TODO: stream conversation to user
+        # ActionCable.server.broadcast("conversations_channel", conversation)
         render json: { conversation: conversation }
       else
         render json: { errors: conversation.errors.full_messages }
@@ -58,6 +78,10 @@ class API::V1::ConversationsController < ApplicationController
              },
              status: :unprocessable_entity
     end
+  end
+
+  def set_conversation
+    @conversation = current_user.conversations.find(params[:id])
   end
 
   def conversation_params

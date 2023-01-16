@@ -8,6 +8,7 @@ class ConversationsChannel < ApplicationCable::Channel
     stream_from "conversation_#{params[:conversation_id]}"
   end
   def unsubscribed
+    stop_all_streams
     # Any cleanup needed when channel is unsubscribed
   end
 end

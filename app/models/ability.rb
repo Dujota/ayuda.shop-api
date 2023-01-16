@@ -40,11 +40,25 @@ class Ability
         # Aliases
         alias_action :my_listings, to: :manage_my_listings
 
+        # Profile
         can :show, User, user_id: user.id
+
+        # Listings
         can :read, Listing
         can :manage_my_listings, Listing
         can :read, Type
         can %i[create destroy update], Listing, user_id: user.id
+
+        # Conversations
+        can :read, Conversation, sender_id: user.id
+        can :read, Conversation, recipient_id: user.id
+        can :create, Conversation
+        can :read, Message, sender_id: user.id
+        can :read, Message, recipient_id: user.id
+        can :create, Message, sender_id: user.id
+
+        can :read, UserConversation, user_id: user.id
+        can :create, UserConversation
       end
 
       if user.has_role? :content_editor
