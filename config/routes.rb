@@ -8,7 +8,8 @@ Rails.application.routes.draw do
       # Refresh Token
       post "token/refresh", to: "token#refresh"
 
-      resources :conversations, only: %i[create] do
+      # Conversations
+      resources :conversations, only: %i[create index show] do
         collection { post "messages", to: "messages#create" }
       end
 
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
+  # OAUTH HANDLERS
   scope "/api/v1", defaults: { format: :json } do
     scope "/nextauth" do
       post "/oauth", to: "users/next_oauth#oauth"
