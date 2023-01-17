@@ -5,12 +5,23 @@ class API::V1::ConversationsController < ApplicationController
 
   def index
     @conversations = current_user.conversations
-    render json: { conversations: @conversations }
+    render json: {
+             data: @conversations,
+             status: 200,
+             message: "My Conversations"
+           }
   end
 
   def show
     if @conversation
-      render json: { conversation: @conversation }
+      render json: {
+               data: {
+                 conversation: @conversation,
+                 messages: @conversation.messages
+               },
+               status: 200,
+               message: "Conversation found."
+             }
     else
       render json: {
                status: 422,
