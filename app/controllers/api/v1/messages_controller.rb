@@ -17,7 +17,7 @@ class API::V1::MessagesController < ApplicationController
         # "conversations_channel",
         # Broadcast to user/sender private channel
         "conversation_#{params[:conversation_id]}",
-        @message
+        { message: @message }
       )
       render json: { message: @message }
     else
