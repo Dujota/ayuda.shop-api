@@ -11,4 +11,8 @@ class ConversationsChannel < ApplicationCable::Channel
     stop_all_streams
     # Any cleanup needed when channel is unsubscribed
   end
+
+  def receive(data)
+    debugger
+  end
 end
