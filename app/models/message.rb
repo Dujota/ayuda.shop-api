@@ -1,5 +1,5 @@
 class Message < ApplicationRecord
-  after_create_commit :transmit_to_conversation
+  after_create_commit :send_message
   belongs_to :conversation
   belongs_to :user
 
@@ -7,13 +7,7 @@ class Message < ApplicationRecord
 
   private
 
-  def transmit_to_conversation
-    ActionCable.server.broadcast(
-      # Broadcast to general open channel
-      # "conversations_channel",
-      # Broadcast to user/sender private channel
-      "conversation_#{self.conversation_id}",
-      { message: self }
-    )
+  def send_message
+    Resque.enqueue(SendMessage, self.id)
   end
 end
