@@ -24,6 +24,9 @@ gem "role_model"
 # Use Redis adapter to run Action Cable in production
 gem "redis", "~> 5.0", ">= 5.0.5"
 
+# Resque Workers for background jobs
+gem "resque"
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
