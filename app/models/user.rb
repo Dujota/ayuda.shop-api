@@ -41,6 +41,8 @@ class User < ApplicationRecord
     JWT.encode(payload, ENV["DEVISE_JWT_SECRET_KEY"], "HS256")
   end
 
+  # Decode JWT
+
   private
 
   def expiration_time

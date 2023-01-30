@@ -72,7 +72,6 @@ class Users::NextOAuthController < ApplicationController
       # 5. user is logged out and they log in to a new account that doesnt match their old one, we throw exception to let them know
 
       # TODO: custom logic needed for returning or dupe users from oauth
-      # debugger
     else
       # if doesnt exist, create the user,
       @user = create_user
